@@ -1,28 +1,28 @@
 const { program } = require("commander");
 
 const {
-    getAll,
-    getById,
-    add,
-    deleteById,
+    listContacts,
+    getContactById,
+    addContact,
+    removeContact,
 } = require("./contacts")
 
 const invokeAction = async ({action, id, name, email, phone}) => {
     switch(action) {
-        case "read":
-            const allContacts = await getAll();
-            return console.log(allContacts);
+        case "list":
+            const allContacts = await listContacts();
+            return console.table(allContacts);
             break;        
-        case "getById":
-            const oneContacts = await getById(id);
+        case "get":
+            const oneContacts = await getContactById(id);
             return console.log(oneContacts);
             break;
-        case "deleteById":
-            const deleteContacts = await deleteById(id);
+        case "remove":
+            const deleteContacts = await removeContact(id);
             return console.log(deleteContacts);     
             break;
         case "add":
-            const newContacts = await add({ name, email, phone });
+            const newContacts = await addContact({ name, email, phone });
             return console.log(newContacts);
             break;
         default:
@@ -41,7 +41,7 @@ program.parse();
 const options = program.opts();
 invokeAction(options)    
 
-// invokeAction({ action: "read" });
-// invokeAction({ action: "getById", id: "qdggE76Jtbfd9eWJHrssH" });
-// invokeAction({ action: "deleteById", id: "etRxG_e63JNJInm0f_q8D" });
+// invokeAction({ action: "list" });
+// invokeAction({ action: "get", id: "qdggE76Jtbfd9eWJHrssH" });
+// invokeAction({ action: "remove", id: "MB9NAOPyzFsCYoRyXC9GD" });
 // invokeAction({ action: "add", name: "Dmytro Best", email: "db@gmail.com", phone: "(050) 887-4654"});
